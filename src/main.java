@@ -12,7 +12,7 @@ import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.Scanner;
 
-//    execute_script C:\Users\Diana\Desktop\script.txt
+//    execute_script C:\Users\Artem\Desktop\script.txt
 public class main {
     public static void main(String[] args) throws IOException {
         ClientSender clientSender = new ClientSender(35259);
