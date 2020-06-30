@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_clientlab6" default="compile.module.clientlab6">
+  <dirname property="module.clientlab6.basedir" file="${ant.file.module_clientlab6}"/>
+  
+  <property name="module.jdk.home.clientlab6" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.clientlab6" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.clientlab6" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.clientlab6" value="-encoding UTF-8 -source 9 -target 9 ${compiler.args}"/>
+  
+  <property name="clientlab6.output.dir" value="${module.clientlab6.basedir}/out/production/ClientLab6"/>
+  <property name="clientlab6.testoutput.dir" value="${module.clientlab6.basedir}/out/test/ClientLab6"/>
+  
+  <path id="clientlab6.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="clientlab6.module.production.classpath">
+    <path refid="${module.jdk.classpath.clientlab6}"/>
+  </path>
+  
+  <path id="clientlab6.runtime.production.module.classpath">
+    <pathelement location="${clientlab6.output.dir}"/>
+  </path>
+  
+  <path id="clientlab6.module.classpath">
+    <path refid="${module.jdk.classpath.clientlab6}"/>
+    <pathelement location="${clientlab6.output.dir}"/>
+  </path>
+  
+  <path id="clientlab6.runtime.module.classpath">
+    <pathelement location="${clientlab6.testoutput.dir}"/>
+    <pathelement location="${clientlab6.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.clientlab6">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.clientlab6">
+    <patternset refid="excluded.from.module.clientlab6"/>
+  </patternset>
+  
+  <path id="clientlab6.module.sourcepath">
+    <dirset dir="${module.clientlab6.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.clientlab6" depends="compile.module.clientlab6.production,compile.module.clientlab6.tests" description="Compile module ClientLab6"/>
+  
+  <target name="compile.module.clientlab6.production" depends="register.custom.compilers" description="Compile module ClientLab6; production classes">
+    <mkdir dir="${clientlab6.output.dir}"/>
+    <javac2 destdir="${clientlab6.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.clientlab6}/javac">
+      <compilerarg line="${compiler.args.clientlab6}"/>
+      <bootclasspath refid="clientlab6.module.bootclasspath"/>
+      <classpath refid="clientlab6.module.production.classpath"/>
+      <src refid="clientlab6.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.clientlab6"/>
+    </javac2>
+    
+    <copy todir="${clientlab6.output.dir}">
+      <fileset dir="${module.clientlab6.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.clientlab6.tests" depends="register.custom.compilers,compile.module.clientlab6.production" description="compile module ClientLab6; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.clientlab6" description="cleanup module">
+    <delete dir="${clientlab6.output.dir}"/>
+    <delete dir="${clientlab6.testoutput.dir}"/>
+  </target>
+</project>
